@@ -15,11 +15,14 @@ phases:
       - echo Initializing Terraform...
       - terraform init -input=false
       # - aws sts get-caller-identity # Optional debug
-  
+  build:
+    commands:
+      - echo Running Terraform Plan...
+      - terraform plan -out=tfplan -input=false
   post_build:
     commands:
       - echo Applying Terraform...
-      - terraform destroy -auto-approve -input=false
+      - terraform apply -auto-approve -input=false tfplan
 
 artifacts:
   files:
